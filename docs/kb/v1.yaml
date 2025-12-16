@@ -1,0 +1,22 @@
+phases:
+  planning:
+    - technique: Metacognitive Scaffolding
+      tip: List 3 assumptions + 4 edges + 2-sentence approach pre-gen.
+      model_tune:
+        claude_code: "Use tools for edge sim (e.g., lint stub)."
+        gemini_cli: "Visualize edges as diagram; multimodal input."
+        chatgpt: '"CoT: Step-by-step assumption chain."'
+  execution:
+    - technique: Incremental Change Framing
+      tip: Propose 3 minimal deltas w/ pros/cons; no full rewrites.
+      model_tune:
+        claude_code: "Agentic: Delegate sub-tasks to parallel agents."
+        gemini_cli: "Parallel: Run 3 variants, score via eval."
+        chatgpt: "Few-shot: 2 examples of incremental fixes."
+  debug:
+    - technique: Self-Verification Loop
+      tip: Write → Lint/Test → Explain fixes → Iterate 2x.
+      model_tune:
+        claude_code: "Terminal tool: Run code, paste output for critique."
+        gemini_cli: "Inline eval: Score this on idempotency 1-10."
+        chatgpt: '"Confidence: End w/ 90% sure? Gaps?"'
