@@ -74,14 +74,27 @@ client = Client(api_key=API_KEY, timeout=3600)  # Docs rec for reasoning
 @argument("task")
 @option("--model", default="claude_code")
 @option("--output", default="md")
-@option("--a-b", is_flag=True, help="A/B: Gen raw + tuned; score uplift (0-100 heuristic)")
-@option("--scrape", is_flag=True, help="Scrape X for KB patch (semantic 'prompt coding [model]')")
+@option(
+    "--a-b", is_flag=True, help="A/B: Gen raw + tuned; score uplift (0-100 heuristic)"
+)
+@option(
+    "--scrape",
+    is_flag=True,
+    help="Scrape X for KB patch (semantic 'prompt coding [model]')",
+)
 @option("--chain", is_flag=True, help="Multi-turn: Gen → Critique → Refine (3 appends)")
 def gen(task, model, output, a_b, scrape, chain):
     if scrape:
         # Stub scrape (expand w/ tool call or requests to X API)
-        scrape_add = {"debug": [{"technique": "Boundary Signaling", "tip": "Mark limits (e.g., 'No Jinja eval')", "model_tune": {
-            model: "Explicit refusals"}}]}
+        scrape_add = {
+            "debug": [
+                {
+                    "technique": "Boundary Signaling",
+                    "tip": "Mark limits (e.g., 'No Jinja eval')",
+                    "model_tune": {model: "Explicit refusals"},
+                }
+            ]
+        }
         KB["phases"]["debug"].extend(scrape_add["debug"])
         print("KB patched w/ scrape—new entries: 1 (Boundary Signaling).")
 
@@ -99,8 +112,7 @@ def gen(task, model, output, a_b, scrape, chain):
         tuned_prompt += f"\n\nRefined Chain: {refined}"
 
     if output == "md":
-        print(
-            f"### Tuned Prompt v0.3 for '{task}' ({model})\n```\n{tuned_prompt}\n```")
+        print(f"### Tuned Prompt v0.3 for '{task}' ({model})\n```\n{tuned_prompt}\n```")
     else:
         print(tuned_prompt)
 
@@ -110,7 +122,8 @@ def gen(task, model, output, a_b, scrape, chain):
         tuned_score = 85  # Mock tuned
         uplift = tuned_score - raw_score
         print(
-            f"\n### A/B Uplift\n| Metric | Raw | Tuned | Delta |\n|--------|-----|-------|-------|\n| Score | {raw_score}% | {tuned_score}% | +{uplift}% |")
+            f"\n### A/B Uplift\n| Metric | Raw | Tuned | Delta |\n|--------|-----|-------|-------|\n| Score | {raw_score}% | {tuned_score}% | +{uplift}% |"
+        )
 
 
 if __name__ == "__main__":
